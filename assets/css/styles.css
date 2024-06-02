@@ -1121,6 +1121,10 @@ body.dark-theme {
   .home__image {
     width: 180px;
   }
+  .home__social{
+    height: 2rem;
+    width: 2rem;
+  }
 
   .about__image {
     width: 180px;
