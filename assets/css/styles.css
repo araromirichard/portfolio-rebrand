@@ -463,7 +463,8 @@ body.dark-theme {
 }
 
 .home__social {
-  height: max-content;
+  height: fit-content;
+  width: max-content;
   position: absolute;
   left: -3rem;
   top: 0;
@@ -1570,12 +1571,13 @@ body.dark-theme {
     grid-template-columns: repeat(2, max-content);
     justify-content: space-between;
   }
-  
-  .footer__links{
+
+  .footer__links {
     column-gap: 3rem;
     order: 1;
   }
-  .scrollup{
+
+  .scrollup {
     right: 3rem;
   }
 }
