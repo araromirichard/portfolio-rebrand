@@ -38,52 +38,39 @@ const shadowHeader = () => {
 }
 window.addEventListener('scroll', shadowHeader)
 
-/*=============== EMAIL JS ===============*/
-// Select the form, message, button, and loader elements
-const contactForm = document.getElementById('contact-form');
-const contactMessage = document.getElementById('contact-message');
-const submitButton = document.getElementById('submit-button');
-const loader = document.getElementById('loader');
+/*=============== CONTACT FORM (Netlify Forms) ===============*/
+const contactForm    = document.getElementById('contact-form')
+const contactMessage = document.getElementById('contact-message')
+const submitButton   = document.getElementById('submit-button')
+const loader         = document.getElementById('loader')
 
-// Function to send an email
-const sendEmail = (e) => {
-    e.preventDefault(); // Prevent default form submission
+contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    loader.classList.remove('hidden')
+    submitButton.disabled = true
+    contactMessage.textContent = 'Sending…'
 
-    // Show loader and disable the button
-    loader.classList.remove('hidden');
-    submitButton.disabled = true;
-    contactMessage.textContent = 'Sending...';
-
-    // Send form data using EmailJS
-    emailjs.sendForm('service_wo64agg', 'template_64vfnhh', '#contact-form', 'WU50jj5_IqzHhVJ0k')
-        .then(() => {
-            // Hide loader and re-enable the button
-            loader.classList.add('hidden');
-            submitButton.disabled = false;
-
-            // Show success message
-            contactMessage.textContent = 'Message sent successfully ✅';
-
-            // Remove message after 5 seconds
-            setTimeout(() => {
-                contactMessage.textContent = '';
-            }, 5000);
-
-            // Reset the form
-            contactForm.reset();
+    try {
+        const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(new FormData(contactForm)).toString(),
         })
-        .catch(() => {
-            // Hide loader and re-enable the button
-            loader.classList.add('hidden');
-            submitButton.disabled = false;
 
-            // Show error message
-            contactMessage.textContent = 'Message not sent (service error) ❌';
-        });
-};
-
-// Add event listener to the form
-contactForm.addEventListener('submit', sendEmail);
+        if (res.ok) {
+            contactMessage.textContent = 'Message sent successfully ✅'
+            contactForm.reset()
+        } else {
+            throw new Error()
+        }
+    } catch {
+        contactMessage.textContent = 'Message not sent (service error) ❌'
+    } finally {
+        loader.classList.add('hidden')
+        submitButton.disabled = false
+        setTimeout(() => { contactMessage.textContent = '' }, 5000)
+    }
+})
 /*=============== SHOW SCROLL UP ===============*/
 const scrollUp = () => {
     const scrollUp = document.getElementById('scroll-up')

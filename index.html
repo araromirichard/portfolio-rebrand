@@ -212,7 +212,8 @@
                <h2 class="contact__title">
                   Send Me A Message
                </h2>
-               <form action="" class="contact__form" id="contact-form">
+               <form name="contact" data-netlify="true" netlify-honeypot="bot-field" class="contact__form" id="contact-form">
+                  <input type="hidden" name="bot-field">
                   <div class="contact__group">
                      <div class="contact__box">
                         <input type="text" name="user_name" class="contact__input" id="name" required
@@ -297,10 +298,6 @@
 
    <!--=============== SCROLLREVEAL ===============-->
    <script src="assets/js/scrollreveal.min.js"></script>
-
-   <!--=============== EMAIL JS ===============-->
-   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-   </script>
 
    <!--=============== MAIN JS ===============-->
    <script src="assets/js/main.js"></script>
