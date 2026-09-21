@@ -262,56 +262,6 @@ if (loadMoreBtn) {
 
 loadDynamicProjects(1)
 
-/*=============== DYNAMIC STACKS ===============*/
-const stacksGrid   = document.getElementById('stacks-grid')
-const stacksLoader = document.getElementById('stacks-loader')
-
-const CATEGORY_LABELS = {
-    frontend: 'Frontend',
-    backend:  'Backend',
-    database: 'Database',
-    other:    'Other',
-}
-
-async function loadStacks() {
-    try {
-        const res = await fetch(`${API_BASE}/api/stacks`)
-        if (!res.ok) throw new Error()
-        const { data } = await res.json()
-
-        if (stacksLoader) stacksLoader.remove()
-
-        // group by category
-        const groups = {}
-        data.forEach(s => {
-            const cat = s.category || 'other'
-            if (!groups[cat]) groups[cat] = []
-            groups[cat].push(s)
-        })
-
-        const order = ['frontend', 'backend', 'database', 'other']
-        const html = order
-            .filter(cat => groups[cat])
-            .map(cat => `
-                <div class="stacks__group">
-                    <h3 class="stacks__category">${CATEGORY_LABELS[cat] || cat}</h3>
-                    <ul class="stacks__list">
-                        ${groups[cat].map(s => `
-                            <li class="stacks__item">
-                                ${s.icon ? `<span class="stacks__icon">${escapeHtml(s.icon)}</span>` : ''}
-                                <span class="stacks__name">${escapeHtml(s.name)}</span>
-                            </li>`).join('')}
-                    </ul>
-                </div>`).join('')
-
-        stacksGrid.insertAdjacentHTML('beforeend', html)
-        scRev.reveal('.stacks__group', { interval: 100 })
-    } catch {
-        if (stacksLoader) stacksLoader.innerHTML = '<span>Could not load stacks.</span>'
-    }
-}
-
-loadStacks()
 
 function escapeHtml(str) {
     return String(str ?? '').replace(/[&<>"']/g, c => ({
