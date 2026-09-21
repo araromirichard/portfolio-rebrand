@@ -173,96 +173,10 @@
          </h2>
 
          <div class="projects__container container grid" id="projects-grid">
-            <!-- Dynamically loaded from the API. Static fallback below is shown
-                 while the API is loading or if it is not yet configured. -->
-            <article class="projects__card">
-               <div class="projects__image">
-                  <img src="assets/img/tryhyphen.jpg" alt="tryhyphen-screenshot" class="projects__img">
-                  <a href="https://tryhyphen.com/" target="_blank" class="projects__button button">
-                     <i class="ri-arrow-right-up-line"></i>
-                  </a>
-               </div>
-               <div class="projects__content">
-                  <h3 class="projects__subtitle">Frontend</h3>
-                  <h2 class="projects__title">TryHyphen</h2>
-                  <p class="projects__description">
-                     B2B Financial Process Automation and Workflow Management Software.
-                  </p>
-               </div>
-               <div class="projects__terminologies">
-                  <span><i class="ri-vuejs-line"></i></span>
-               </div>
-            </article>
-
-            <article class="projects__card">
-               <div class="projects__image">
-                  <img src="assets/img/montweb.jpg" alt="montwater-screenshot" class="projects__img">
-                  <a href="https://www.montwater.com/" target="_blank" class="projects__button button">
-                     <i class="ri-arrow-right-up-line"></i>
-                  </a>
-               </div>
-               <div class="projects__content">
-                  <h3 class="projects__subtitle">FullStack</h3>
-                  <h2 class="projects__title">Mont Mineral Water</h2>
-                  <p class="projects__description">
-                     e-commerce website with admin dashboard to manage products, orders, payments and customers
-                  </p>
-               </div>
-               <div class="projects__terminologies">
-                  <span><i class="ri-vuejs-line"></i></span>
-               </div>
-               <div class="projects__buttons">
-                  <a href="https://github.com/araromirichard/mont-mineral-water" class="projects__link">
-                     <i class="ri-github-line"></i>View
-                  </a>
-               </div>
-            </article>
-
-            <article class="projects__card">
-               <div class="projects__image">
-                  <img src="assets/img/ranaweb.jpg" alt="ranafarms-screenshot" class="projects__img">
-                  <a href="https://rana.com.ng/" class="projects__button button">
-                     <i class="ri-arrow-right-up-line"></i>
-                  </a>
-               </div>
-               <div class="projects__content">
-                  <h3 class="projects__subtitle">FullStack</h3>
-                  <h2 class="projects__title">Rana Farms</h2>
-                  <p class="projects__description">
-                     An Agro-investment web application with dashboards for admins and investors to manage investments
-                  </p>
-               </div>
-               <div class="projects__terminologies">
-                  <span><i class="ri-vuejs-line"></i></span>
-               </div>
-               <div class="projects__buttons">
-                  <a href="https://github.com/Rana-farms/webfrontend" target="_blank" class="projects__link">
-                     <i class="ri-github-line"></i>View
-                  </a>
-               </div>
-            </article>
-
-            <article class="projects__card">
-               <div class="projects__image">
-                  <img src="assets/img/golangapi2.png" alt="gocode-screenshot" class="projects__img">
-                  <a href="https://github.com/araromirichard/tevhey-roll" target="_blank"
-                     class="projects__button button">
-                     <i class="ri-arrow-right-up-line"></i>
-                  </a>
-               </div>
-               <div class="projects__content">
-                  <h3 class="projects__subtitle">Backend</h3>
-                  <h2 class="projects__title">Romovees (Tevhey-roll)</h2>
-                  <p class="projects__description">
-                     An API built with the standard Go library and PostgreSQL — movie listings, auth, rate limiting and custom error handling.
-                  </p>
-               </div>
-               <div class="projects__buttons">
-                  <a href="https://github.com/araromirichard/tevhey-roll" target="_blank" class="projects__link">
-                     <i class="ri-github-line"></i>View
-                  </a>
-               </div>
-            </article>
+            <div class="projects__loader" id="projects-loader">
+               <i class="ri-loader-4-line projects__loader-icon"></i>
+               <span>Loading projects…</span>
+            </div>
          </div>
 
          <!-- Load More / Pagination -->

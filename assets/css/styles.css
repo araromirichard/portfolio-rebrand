@@ -829,6 +829,26 @@ body.dark-theme {
   font-size: var(--small-font-size);
 }
 
+.projects__loader {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: 3rem 1rem;
+  color: var(--text-color-light);
+  font-size: var(--small-font-size);
+}
+
+.projects__loader-icon {
+  font-size: 1.4rem;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /*=============== CONTACT ===============*/
 .contact {
   padding-bottom: 0;

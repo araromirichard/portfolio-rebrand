@@ -161,11 +161,10 @@ scRev.reveal(`.home__name, .home__info,
 scRev.reveal(`.projects__card`, { interval: 100 });
 
 /*=============== DYNAMIC PROJECTS ===============*/
-// Update API_BASE to your Render URL after deployment
-// e.g. 'https://portfolio-api-xxxx.onrender.com'
 const API_BASE = 'https://portfolio-rebrand.onrender.com'
 
 const projectsGrid  = document.getElementById('projects-grid')
+const projectsLoader = document.getElementById('projects-loader')
 const loadMoreBtn   = document.getElementById('load-more-btn')
 const pageInfoEl    = document.getElementById('projects-page-info')
 
@@ -219,8 +218,12 @@ async function fetchProjects(page) {
 }
 
 async function loadDynamicProjects(page = 1) {
+    if (page === 1 && projectsLoader) projectsLoader.style.display = 'flex'
+
     try {
         const { data, meta } = await fetchProjects(page)
+
+        if (projectsLoader) projectsLoader.remove()
 
         if (page === 1) {
             projectsGrid.innerHTML = data.map(buildProjectCard).join('')
@@ -231,8 +234,6 @@ async function loadDynamicProjects(page = 1) {
         currentPage = meta.page
         totalPages  = meta.totalPages
 
-        pageInfoEl.textContent = `Page ${meta.page} of ${meta.totalPages}`
-
         if (meta.page >= meta.totalPages) {
             loadMoreBtn.classList.add('hidden')
             pageInfoEl.textContent = `Showing all ${meta.total} project${meta.total !== 1 ? 's' : ''}`
@@ -240,11 +241,12 @@ async function loadDynamicProjects(page = 1) {
             loadMoreBtn.classList.remove('hidden')
             loadMoreBtn.disabled = false
             loadMoreBtn.innerHTML = '<i class="ri-refresh-line"></i> Load More'
+            pageInfoEl.textContent = `Page ${meta.page} of ${meta.totalPages}`
         }
 
         scRev.reveal('.projects__card', { interval: 100 })
     } catch {
-        // API not yet deployed or unreachable — keep static HTML content
+        if (projectsLoader) projectsLoader.innerHTML = '<span>Could not load projects.</span>'
         loadMoreBtn.classList.add('hidden')
         pageInfoEl.textContent = ''
     }
@@ -258,8 +260,7 @@ if (loadMoreBtn) {
     })
 }
 
-// Only attempt dynamic load when API_BASE is configured
-if (API_BASE) loadDynamicProjects(1)
+loadDynamicProjects(1)
 
 function escapeHtml(str) {
     return String(str ?? '').replace(/[&<>"']/g, c => ({
