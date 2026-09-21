@@ -51,10 +51,13 @@ contactForm.addEventListener('submit', async (e) => {
     contactMessage.textContent = 'Sending…'
 
     try {
+        const formData = new FormData(contactForm)
+        formData.append('form-name', 'contact')
+
         const res = await fetch('/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(new FormData(contactForm)).toString(),
+            body: new URLSearchParams(formData).toString(),
         })
 
         if (res.ok) {
