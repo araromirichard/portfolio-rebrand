@@ -163,7 +163,7 @@ scRev.reveal(`.projects__card`, { interval: 100 });
 /*=============== DYNAMIC PROJECTS ===============*/
 // Update API_BASE to your Render URL after deployment
 // e.g. 'https://portfolio-api-xxxx.onrender.com'
-const API_BASE = ''   // ← paste your Render URL here
+const API_BASE = 'https://portfolio-rebrand.onrender.com'
 
 const projectsGrid  = document.getElementById('projects-grid')
 const loadMoreBtn   = document.getElementById('load-more-btn')

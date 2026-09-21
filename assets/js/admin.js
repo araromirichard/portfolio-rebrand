@@ -3,7 +3,7 @@
 
 const SUPABASE_URL     = 'https://qdprxrhhobghdpyftbzu.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkcHJ4cmhob2JnaGRweWZ0Ynp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAwMTM0NjAsImV4cCI6MjEwNTU4OTQ2MH0.grMLW8-1LTgFFwm7NmZEYDApiw8UIbaiBXwh4O-NfLg'  // ← paste your anon key here
-const API_BASE         = 'YOUR_RENDER_API_URL'      // ← paste Render URL after deployment
+const API_BASE         = 'https://portfolio-rebrand.onrender.com'
 
 // ── Init ──────────────────────────────────────────────────────────
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
