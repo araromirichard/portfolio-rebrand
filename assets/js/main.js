@@ -55,7 +55,7 @@ const sendEmail = (e) => {
     contactMessage.textContent = 'Sending...';
 
     // Send form data using EmailJS
-    emailjs.sendForm('service_1tnuekn', 'template_64vfnhh', '#contact-form', 'WU50jj5_IqzHhVJ0k')
+    emailjs.sendForm('service_wo64agg', 'template_64vfnhh', '#contact-form', 'WU50jj5_IqzHhVJ0k')
         .then(() => {
             // Hide loader and re-enable the button
             loader.classList.add('hidden');
