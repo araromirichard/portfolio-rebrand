@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Richard Araromi</title>
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.4.0/remixicon.css" crossorigin="">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+
+  <!-- ── Login ─────────────────────────────── -->
+  <div id="login-view" class="login-container">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="login-logo-circle">RA</span>
+        <span>Portfolio Admin</span>
+      </div>
+      <h1>Sign In</h1>
+      <p>Enter your email to receive a passwordless magic link.</p>
+      <form id="login-form">
+        <div class="form-group">
+          <input type="email" id="login-email" placeholder="your@email.com" required>
+        </div>
+        <button type="submit" class="btn btn-primary" id="login-btn" style="width:100%;justify-content:center;margin-top:.5rem">
+          <i class="ri-send-plane-line"></i> Send Magic Link
+        </button>
+      </form>
+      <p id="login-message" class="login-message"></p>
+    </div>
+  </div>
+
+  <!-- ── Admin Dashboard ───────────────────── -->
+  <div id="admin-view" class="admin-layout hidden">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <span class="login-logo-circle">RA</span>
+        <span>Admin</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-link active" data-tab="projects">
+          <i class="ri-folder-line"></i> Projects
+        </a>
+        <a href="#" class="sidebar-link" data-tab="stacks">
+          <i class="ri-stack-line"></i> Stacks
+        </a>
+      </nav>
+
+      <button id="logout-btn" class="btn btn-outline sidebar-logout">
+        <i class="ri-logout-box-line"></i> Sign Out
+      </button>
+    </aside>
+
+    <main class="admin-main">
+
+      <!-- Projects Tab -->
+      <div id="projects-tab" class="tab-content active">
+        <div class="tab-header">
+          <h2>Projects</h2>
+          <button class="btn btn-primary" id="add-project-btn">
+            <i class="ri-add-line"></i> Add Project
+          </button>
+        </div>
+        <div id="projects-list" class="data-grid"></div>
+        <div id="projects-pagination" class="pagination"></div>
+      </div>
+
+      <!-- Stacks Tab -->
+      <div id="stacks-tab" class="tab-content hidden">
+        <div class="tab-header">
+          <h2>Stacks</h2>
+          <button class="btn btn-primary" id="add-stack-btn">
+            <i class="ri-add-line"></i> Add Stack
+          </button>
+        </div>
+        <div id="stacks-list" class="data-grid"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── Project Modal ──────────────────────── -->
+  <div id="project-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="project-modal-title">Add Project</h3>
+        <button class="modal-close" id="project-modal-close"><i class="ri-close-line"></i></button>
+      </div>
+      <form id="project-form">
+        <input type="hidden" id="project-id">
+
+        <div class="form-group">
+          <label for="project-title">Title *</label>
+          <input type="text" id="project-title" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="project-subtitle">Subtitle</label>
+            <input type="text" id="project-subtitle" placeholder="e.g. FullStack">
+          </div>
+          <div class="form-group">
+            <label for="project-order">Order Index</label>
+            <input type="number" id="project-order" value="0" min="0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="project-description">Description</label>
+          <textarea id="project-description" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="project-image">Image URL</label>
+          <input type="url" id="project-image" placeholder="https://…">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="project-live-url">Live URL</label>
+            <input type="url" id="project-live-url" placeholder="https://…">
+          </div>
+          <div class="form-group">
+            <label for="project-github-url">GitHub URL</label>
+            <input type="url" id="project-github-url" placeholder="https://github.com/…">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="project-stacks">Tech Stacks <span style="text-transform:none;font-weight:400">(comma-separated)</span></label>
+          <input type="text" id="project-stacks" placeholder="React, Node.js, PostgreSQL">
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="project-featured"> Featured project
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="project-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="ri-save-line"></i> Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Stack Modal ────────────────────────── -->
+  <div id="stack-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="stack-modal-title">Add Stack</h3>
+        <button class="modal-close" id="stack-modal-close"><i class="ri-close-line"></i></button>
+      </div>
+      <form id="stack-form">
+        <input type="hidden" id="stack-id">
+
+        <div class="form-group">
+          <label for="stack-name">Name *</label>
+          <input type="text" id="stack-name" required placeholder="e.g. React">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="stack-icon">Icon class <span style="text-transform:none;font-weight:400">(RemixIcon)</span></label>
+            <input type="text" id="stack-icon" placeholder="ri-reactjs-line">
+          </div>
+          <div class="form-group">
+            <label for="stack-category">Category</label>
+            <select id="stack-category">
+              <option value="frontend">Frontend</option>
+              <option value="backend">Backend</option>
+              <option value="database">Database</option>
+              <option value="devops">DevOps</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="stack-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="ri-save-line"></i> Save Stack</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

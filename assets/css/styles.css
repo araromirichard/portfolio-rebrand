@@ -792,6 +792,41 @@ body.dark-theme {
   font-size: 1rem;
 }
 
+/*=============== PROJECTS – dynamic extras ===============*/
+.projects__stack-tag {
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: var(--font-semi-bold);
+  color: var(--text-color);
+  background-color: var(--body-color);
+  border: 1px solid var(--black-color-light);
+  padding: .15rem .45rem;
+  margin-inline-end: .25rem;
+  transition: background-color .4s, border-color .4s;
+}
+
+.projects__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.projects__page-info {
+  font-size: var(--small-font-size);
+  color: var(--text-color-light);
+}
+
+.projects__loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-color-light);
+  font-size: var(--small-font-size);
+}
+
 /*=============== CONTACT ===============*/
 .contact {
   padding-bottom: 0;

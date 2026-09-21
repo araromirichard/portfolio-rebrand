@@ -156,6 +156,113 @@ const scRev = ScrollReveal({
 
 scRev.reveal(`.home__perfil, .about__image, .contact__mail`, { origin: 'right' });
 scRev.reveal(`.home__name, .home__info,
-                .about__container .section__title-1, .about__info, 
+                .about__container .section__title-1, .about__info,
                 .contact__social, .contact__data`, { origin: 'left' });
 scRev.reveal(`.projects__card`, { interval: 100 });
+
+/*=============== DYNAMIC PROJECTS ===============*/
+// Update API_BASE to your Render URL after deployment
+// e.g. 'https://portfolio-api-xxxx.onrender.com'
+const API_BASE = ''   // ← paste your Render URL here
+
+const projectsGrid  = document.getElementById('projects-grid')
+const loadMoreBtn   = document.getElementById('load-more-btn')
+const pageInfoEl    = document.getElementById('projects-page-info')
+
+let currentPage  = 1
+let totalPages   = 1
+const PAGE_SIZE  = 6
+
+function buildProjectCard(p) {
+    const stacks = (p.stacks || [])
+        .map(s => `<span class="projects__stack-tag">${escapeHtml(s)}</span>`)
+        .join('')
+
+    const liveBtn = p.live_url
+        ? `<a href="${escapeHtml(p.live_url)}" target="_blank" class="projects__button button">
+               <i class="ri-arrow-right-up-line"></i>
+           </a>`
+        : ''
+
+    const ghLink = p.github_url
+        ? `<div class="projects__buttons">
+               <a href="${escapeHtml(p.github_url)}" target="_blank" class="projects__link">
+                   <i class="ri-github-line"></i>View
+               </a>
+           </div>`
+        : ''
+
+    const img = p.image_url
+        ? `<img src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.title)}" class="projects__img" loading="lazy">`
+        : ''
+
+    return `
+        <article class="projects__card">
+            <div class="projects__image">
+                ${img}
+                ${liveBtn}
+            </div>
+            <div class="projects__content">
+                <h3 class="projects__subtitle">${escapeHtml(p.subtitle || 'Project')}</h3>
+                <h2 class="projects__title">${escapeHtml(p.title)}</h2>
+                <p class="projects__description">${escapeHtml(p.description || '')}</p>
+            </div>
+            ${stacks ? `<div class="projects__terminologies">${stacks}</div>` : ''}
+            ${ghLink}
+        </article>`
+}
+
+async function fetchProjects(page) {
+    const res = await fetch(`${API_BASE}/api/projects?page=${page}&limit=${PAGE_SIZE}`)
+    if (!res.ok) throw new Error('API error ' + res.status)
+    return res.json()
+}
+
+async function loadDynamicProjects(page = 1) {
+    try {
+        const { data, meta } = await fetchProjects(page)
+
+        if (page === 1) {
+            projectsGrid.innerHTML = data.map(buildProjectCard).join('')
+        } else {
+            projectsGrid.insertAdjacentHTML('beforeend', data.map(buildProjectCard).join(''))
+        }
+
+        currentPage = meta.page
+        totalPages  = meta.totalPages
+
+        pageInfoEl.textContent = `Page ${meta.page} of ${meta.totalPages}`
+
+        if (meta.page >= meta.totalPages) {
+            loadMoreBtn.classList.add('hidden')
+            pageInfoEl.textContent = `Showing all ${meta.total} project${meta.total !== 1 ? 's' : ''}`
+        } else {
+            loadMoreBtn.classList.remove('hidden')
+            loadMoreBtn.disabled = false
+            loadMoreBtn.innerHTML = '<i class="ri-refresh-line"></i> Load More'
+        }
+
+        scRev.reveal('.projects__card', { interval: 100 })
+    } catch {
+        // API not yet deployed or unreachable — keep static HTML content
+        loadMoreBtn.classList.add('hidden')
+        pageInfoEl.textContent = ''
+    }
+}
+
+if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', async () => {
+        loadMoreBtn.disabled = true
+        loadMoreBtn.innerHTML = '<i class="ri-loader-2-line"></i> Loading…'
+        await loadDynamicProjects(currentPage + 1)
+    })
+}
+
+// Only attempt dynamic load when API_BASE is configured
+if (API_BASE) loadDynamicProjects(1)
+
+function escapeHtml(str) {
+    return String(str ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]))
+}
