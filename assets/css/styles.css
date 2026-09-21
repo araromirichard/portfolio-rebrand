@@ -689,6 +689,54 @@ body.dark-theme {
 
 
 
+/*=============== STACKS ===============*/
+.stacks__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem 1.5rem;
+}
+
+.stacks__group {
+  background-color: var(--container-color);
+  padding: 1.25rem 1.5rem;
+  transition: background-color .4s;
+}
+
+.stacks__category {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--first-color);
+  text-transform: uppercase;
+  letter-spacing: .05rem;
+  margin-bottom: 1rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid hsla(14, 98%, 50%, .25);
+}
+
+.stacks__list {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  list-style: none;
+}
+
+.stacks__item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+}
+
+.stacks__icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.stacks__name {
+  font-weight: var(--font-medium);
+}
+
 /*=============== PROJECTS ===============*/
 .projects {
   background-color: var(--container-color);
@@ -1218,6 +1266,10 @@ body.dark-theme {
     justify-content: center;
   }
 
+  .stacks__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .contact__data {
     width: 350px;
     padding: 4rem 1.5rem;
@@ -1534,6 +1586,10 @@ body.dark-theme {
   .projects__container {
     grid-template-columns: repeat(3, 352px);
     padding-block: 3rem 1rem;
+  }
+
+  .stacks__container {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .projects__card {
